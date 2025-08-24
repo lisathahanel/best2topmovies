@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8"></meta>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+  <title>Watch Latest & Old Luganda Translated Movies from all Vjs like VJ Junior, Vj Emmy, VJ Ice P, Vj Jingo, Vj Kevo, Vj Lance, Vj Baros</title>
+
+  <!--SEO Meta Description-->
+  <meta content="Firimu mu Luganda from all Vjs like VJ Junior, Vj Emmy, VJ Ice P, Vj Jingo, Vj Kevo, Vj Lance, Vj Baros"></meta>
+
+  <!--Robots-->
+  <meta content="index, follow" name="robots"></meta>
+
+  <style>
+    body {
+      background-color: #0b0b0b;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .movie-search-box {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .movie-search-box form {
+      display: flex;
+      background: #1c1c1c;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .movie-search-box input[type="text"] {
+      flex: 1;
+      padding: 20px 24px;
+      font-size: 20px;
+      border: none;
+      outline: none;
+      background-color: #111;
+      color: #fff;
+    }
+
+    .movie-search-box input::placeholder {
+      color: #bbb;
+      font-size: 18px;
+    }
+
+    .movie-search-box button {
+      padding: 0 30px;
+      font-size: 20px;
+      font-weight: bold;
+      background-color: #e50914;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .movie-search-box button:hover {
+      background-color: #b00610;
+    }
+
+    @media (max-width: 600px) {
+      .movie-search-box form {
+        flex-direction: column;
+      }
+
+      .movie-search-box input[type="text"],
+      .movie-search-box button {
+        width: 100%;
+        font-size: 28px;
+        padding: 16px;
+      }
+
+      .movie-search-box input[type="text"] {
+        border-radius: 30px 30px 0 0;
+      }
+
+      .movie-search-box button {
+        border-radius: 0 0 30px 30px;
+      }
+    }
+
+    .movie-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px;
+      justify-content: center;
+      background-color: #111;
+    }
+
+    .movie-menu a {
+      background-color: #e50914;
+      color: white;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .movie-menu a:hover {
+      background-color: #b00610;
+    }
+
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .movie-card {
+      background: #111;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+      transition: transform 0.3s ease;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+
+    .poster {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.4s ease-in-out;
+    }
+
+    .movie-card:hover img {
+      filter: brightness(0.5);
+      transform: scale(1.05);
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      color: white;
+      background: rgba(229, 9, 20, 0.9);
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      text-align: center;
+      line-height: 70px;
+      box-shadow: 0 0 20px #e50914;
+      pointer-events: none;
+    }
+
+    .movie-title {
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      background: #e50914;
+      color: white;
+      text-transform: capitalize;
+    }
+
+    @media (max-width: 600px) {
+      .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        padding: 15px;
+      }
+
+      .movie-title {
+        font-size: 14px;
+        padding: 10px;
+      }
+
+      .play-button {
+        font-size: 36px;
+        width: 55px;
+        height: 55px;
+        line-height: 55px;
+      }
+    }
+  </style>
+
+<body>
+  
+  <div style="width: 100%; height: 10px; background-color: orange; margin: 10px 0;"></div>
+
+  <!-- Search Box -->
+  <div class="movie-search-box">
+    <form action="https://www.paypalads.com/search/label/movies1000" method="get">
+      <input name="q" placeholder="🔍 Search for movies, shows, actors..." required type="text" />
+      <button type="submit"><a href="https://www.paypalads.com/search/label/movies1000" target="_blank" rel="nofollow">Search</a></button>
+    </form>
+  </div>
+  
+  <div style="width: 100%; height: 10px; background-color: green; margin: 10px 0;"></div>
+
+
+  <!-- Movie Post Grid -->
+  <div id="movie-label-posts"></div>
+
+  <script type="2c7391a9fcb8bda988a1b704-text/javascript">
+    function renderMovieLabelPosts(json) {
+      var postsHTML = '<div class="movie-grid">';
+      for (var i = 0; i < json.feed.entry.length; i++) {
+        var entry = json.feed.entry[i];
+        var title = entry.title.$t;
+        var url = '';
+        for (var j = 0; j < entry.link.length; j++) {
+          if (entry.link[j].rel === 'alternate') {
+            url = entry.link[j].href;
+            break;
+          }
+        }
+
+        var imgUrl = '';
+        if (entry.media$thumbnail) {
+          imgUrl = entry.media$thumbnail.url.replace('/s72-c/', '/s640/');
+        } else {
+          var content = entry.content.$t;
+          var imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+          imgUrl = imgMatch && imgMatch[1] ? imgMatch[1] : 'https://via.placeholder.com/300x450?text=No+Image';
+        }
+
+        postsHTML += `
+          <div class="movie-card">
+            <a href="${url}" title="${title}">
+              <div class="poster">
+                <img src="${imgUrl}" alt="${title}">
+                <div class="play-button">&#9658;</div>
+              </div>
+              <div class="
+              
+              <!--Movie Post Grid with Stylish Play Button-->
+<div id="movie-label-posts"></div>
+
+<script type="text/javascript">
+  function renderMovieLabelPosts(json) {
+    var postsHTML = '<div class="movie-grid">';
+    for (var i = 0; i < json.feed.entry.length; i++) {
+      var entry = json.feed.entry[i];
+      var title = entry.title.$t;
+      var url = '';
+      for (var j = 0; j < entry.link.length; j++) {
+        if (entry.link[j].rel === 'alternate') {
+          url = entry.link[j].href;
+          break;
+        }
+      }
+
+      var imgUrl = '';
+      if (entry.media$thumbnail) {
+        imgUrl = entry.media$thumbnail.url.replace('/s72-c/', '/s640/');
+      } else {
+        var content = entry.content.$t;
+        var imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+        imgUrl = imgMatch && imgMatch[1] ? imgMatch[1] : 'https://via.placeholder.com/300x450?text=No+Image';
+      }
+
+      postsHTML += `
+        <div class="movie-card">
+          <a href="${url}" title="${title}">
+            <div class="poster">
+              <img src="${imgUrl}" alt="${title}">
+              <div class="play-button">&#9658;</div>
+            </div>
+            <div class="movie-title">${title}</div>
+          </a>
+        </div>
+      `;
+    }
+    postsHTML += '</div>';
+    document.getElementById('movie-label-posts').innerHTML = postsHTML;
+  }
+</script>
+
+
+<!--Movie Post Grid with Stylish Play Button-->
+<div id="movie-label-posts"></div>
+
+<script type="2c7391a9fcb8bda988a1b704-text/javascript">
+  function renderMovieLabelPosts(json) {
+    var postsHTML = '<div class="movie-grid">';
+    for (var i = 0; i < json.feed.entry.length; i++) {
+      var entry = json.feed.entry[i];
+      var title = entry.title.$t;
+      var url = '';
+      for (var j = 0; j < entry.link.length; j++) {
+        if (entry.link[j].rel === 'alternate') {
+          url = entry.link[j].href;
+          break;
+        }
+      }
+
+      var imgUrl = '';
+      if (entry.media$thumbnail) {
+        imgUrl = entry.media$thumbnail.url.replace('/s72-c/', '/s640/');
+      } else {
+        var content = entry.content.$t;
+        var imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+        imgUrl = imgMatch && imgMatch[1] ? imgMatch[1] : 'https://via.placeholder.com/300x450?text=No+Image';
+      }
+
+      postsHTML += `
+        <div class="movie-card">
+          <a href="${url}" title="${title}">
+            <div class="poster">
+              <img src="${imgUrl}" alt="${title}">
+              <div class="play-button">&#9658;</div>
+            </div>
+            <div class="movie-title">${title}</div>
+          </a>
+        </div>
+      `;
+    }
+    postsHTML += '</div>';
+    document.getElementById('movie-label-posts').innerHTML = postsHTML;
+  }
+</script>
+
+<!--Blogger JSON Feed for label "movies1000"-->
+<script src="https://www.paypalads.com/feeds/posts/default/-/movies1000?alt=json-in-script&amp;callback=renderMovieLabelPosts" type="2c7391a9fcb8bda988a1b704-text/javascript"></script>
+
+<style>
+  .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .movie-card {
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease;
+  }
+
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+
+  .poster {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 2/3;
+  }
+
+  .movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.4s ease-in-out;
+    display: block;
+  }
+
+  .movie-card:hover img {
+    filter: brightness(0.5);
+    transform: scale(1.05);
+  }
+
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: white;
+    background: rgba(229, 9, 20, 0.9);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    box-shadow: 0 0 20px #e50914;
+    pointer-events: none;
+  }
+
+  .movie-title {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    background: #e50914;
+    color: white;
+    text-transform: capitalize;
+  }
+
+  @media (max-width: 600px) {
+    .movie-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      padding: 15px;
+    }
+
+    .movie-title {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .play-button {
+      font-size: 36px;
+      width: 55px;
+      height: 55px;
+      line-height: 55px;
+    }
+  }
+</style>
+
+</script></span></b></span></strong></div><ul class="wp-block-list"><li style="text-align: center;"><a href="https://www.paypalads.com/search" style="font-size: large;" target="_blank">Search</a><span style="font-size: large;">&nbsp;|&nbsp;</span><a href="https://www.paypalads.com/p/contact-us.html" style="font-size: large;" target="_blank">Contact US</a></li><li style="text-align: center;"><span style="font-size: medium;"><a href="https://www.paypalads.com/p/privacy-policy.html" target="_blank">Privacy policy</a>&nbsp;|&nbsp;<a href="https://www.paypalads.com/p/affiliate-marketing-and-adsense.html" target="_blank">Disclosure</a></span></li><span style="font-size: medium;"><!--/wp:list-item--><!--wp:list-item-->
+<!--/wp:list-item-->
+
+<!--wp:list-item-->
+</span><li style="text-align: center;"><a href="https://www.paypalads.com/p/terms-and-conditions.html" target="_blank"><span style="font-size: medium;">Terms and Conditions</span></a></li>
+<!--/wp:list-item--></ul>
+<!--/wp:list-->
+
+<p></p>
+ </section></main>
+
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="2c7391a9fcb8bda988a1b704-|49" defer></script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97460cb8efedd931',t:'MTc1NjA3MjA2Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"4c2de9bc788e471facac84a0b42a7ee6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
