@@ -108,6 +108,77 @@
 
 <p></p>
 
+   <!-- Google Ad Script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" 
+     crossorigin="anonymous"></script>
+
+<!-- Left Sticky Side Rail Ad with Label -->
+<div id="left-ad">
+  <div class="ad-label">AD</div>
+  <ins class="adsbygoogle"
+       style="display:block; width: 160px; height: auto;" 
+       data-ad-client="ca-pub-2269884583846743"
+       data-ad-slot="2115767840"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+
+<!-- Right Sticky Side Rail Ad with Label -->
+<div id="right-ad">
+  <div class="ad-label">AD</div>
+  <ins class="adsbygoogle"
+       style="display:block; width: 160px; height: auto;" 
+       data-ad-client="ca-pub-2269884583846743"
+       data-ad-slot="2115767840"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+
+<!-- Google Ads Initialize -->
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<!-- Sticky Side Rail Ad CSS -->
+<style>
+  #left-ad, #right-ad {
+    position: fixed;
+    top: 0; /* Change to 0 to stick the ads at the top of the page */
+    width: 160px;
+    z-index: 9999;
+  }
+
+  #left-ad {
+    left: 0;
+  }
+
+  #right-ad {
+    right: 0;
+  }
+
+  /* Ad label styling */
+  .ad-label {
+    position: absolute;
+    top: 10px;  /* Adjust to move the label down or up */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10000;
+  }
+
+  /* Optional: Adjust the ad's position for smaller screens */
+  @media (max-width: 768px) {
+    #left-ad, #right-ad {
+      display: none;
+    }
+  }
+</style>
+
 </section>
   </main>
 </html>
