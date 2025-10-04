@@ -16,6 +16,70 @@
 </head>
 <body style="background:#000; color:#fff; font-family:Arial, sans-serif;">
 
+  <style>
+  /* Sticky top menu */
+  .menu-bar {
+    position: sticky;
+    top: 0;
+    width: 70%; /* your desired width */
+    max-width: 1000px;
+    margin: 0 auto; /* centers the bar */
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0 0 12px 12px;
+    z-index: 9999;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .menu-bar a {
+    font-family: Georgia, "Palatino Linotype", Palatino, serif;
+    font-weight: 700;
+    padding: 8px 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    border-radius: 6px;
+    transition: opacity 0.3s;
+  }
+
+  .menu-bar a:hover {
+    opacity: 0.8;
+  }
+
+  /* Link colors */
+  .menu-home { background-color: #04ff00; color: #ff00fe; }
+  .menu-movies { background-color: #3d85c6; color: #ffa400; }
+  .menu-blogs { background-color: #fcff01; color: #351c75; }
+  .menu-about { background-color: #01ffff; color: #cc0000; }
+  .menu-contact { background-color: #4c1130; color: #fcff01; font-family: Roboto; }
+  .menu-jobs { background-color: #ff00fe; color: #04ff00; }
+
+  /* Responsive: shrink menu width on smaller screens */
+  @media (max-width: 600px) {
+    .menu-bar {
+      width: 95%;
+    }
+    .menu-bar a {
+      font-size: 16px;
+      padding: 6px 10px;
+    }
+  }
+</style>
+
+<div class="menu-bar">
+  <a href="/" class="menu-home">Home</a>
+  <a href="https://www.paypalads.com/search/label/movies1000" class="menu-movies">Movies</a>
+  <a href="https://www.paypalads.com/search" class="menu-blogs">Blogs</a>
+  <a href="https://www.paypalads.com/p/about-us.html" class="menu-about">About</a>
+  <a href="https://www.paypalads.com/p/contact-us_14.html" class="menu-contact">Contact</a>
+  <a href="https://www.paypalads.com/2015/12/job-matching-across-ireland-singapore.html" class="menu-jobs">Jobs</a>
+</div>
+
   <!-- ✅ Main Post Content -->
   <main>
 <p/><div class='separator' style='clear: both; text-align: center;'><a href='https://www.paypalads.com/search' style='margin-left: 1em; margin-right: 1em;'><img alt='free online courses with free certificates' border='0' data-original-height='200' data-original-width='200' height='200' src='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhFWGj502achTPE6QB0jM17mHv6-AWYVa-BmjOa7K22MN8VAVgpu4mER0bg-I6zHbyu2btZJlF46vN0zORQV17A-DVi88sCap_anEhcM21DdoiC3WPDDi6dXTOzVwtABfPn56Jfa4x6dHkyGuGxT6YJLHc8NpGAlGG60Tk4eiY6CLzK3ShnccAyDtV5j53p/w200-h200/200w.gif' title='free online courses with free certificates' width='200'/></a></div><br/><p>
