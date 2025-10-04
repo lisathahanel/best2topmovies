@@ -259,6 +259,107 @@ async function searchPosts(e) {
     </p>
 
   </main>
+<style>
+  body {
+    zoom: 0.95; /* Slightly zoomed for readability */
+    margin-bottom: 160px; /* Prevents content from being hidden behind footer */
+  }
+
+  /* Bottom sticky footer */
+  #sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 2px solid #ccc;
+    z-index: 9999;
+    padding: 8px 0;
+    box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  }
+
+  /* Ad container centered */
+  #sticky-footer .ad-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  /* Menu links wrapper - scrollable if overflow */
+  #sticky-footer .menu {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  /* Individual menu links */
+  #sticky-footer a {
+    flex: 0 0 auto;
+    font-family: Georgia, "Palatino Linotype", Palatino, serif;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 13px;
+    transition: opacity 0.3s;
+  }
+
+  #sticky-footer a:hover {
+    opacity: 0.8;
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  #sticky-footer .menu::-webkit-scrollbar {
+    display: none;
+  }
+  #sticky-footer .menu {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Small "Ad" label */
+  #sticky-footer .ad-label {
+    font-size: 11px;
+    color: #444;
+    text-align: center;
+    margin-top: 4px;
+  }
+</style>
+
+<!-- Bottom Sticky Footer -->
+<div id="sticky-footer">
+  <div class="ad-box">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:270px;height:90px"
+         data-ad-client="ca-pub-2269884583846743"
+         data-ad-slot="6412492966"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class="menu">
+    <a href="/" style="background-color:#04ff00;color:#ff00fe;">Home</a>
+    <a href="https://www.paypalads.com/search/label/movies1000" style="background-color:#3d85c6;color:#ffa400;">Movies</a>
+    <a href="https://www.paypalads.com/search" style="background-color:#fcff01;color:#351c75;">Blogs</a>
+    <a href="https://www.paypalads.com/p/about-us.html" style="background-color:#01ffff;color:#cc0000;">About</a>
+    <a href="https://www.paypalads.com/2015/12/job-matching-across-ireland-singapore.html" style="background-color:#ff00fe;color:#04ff00;">Jobs</a>
+  </div>
+
+  <div class="ad-label"><b>Ad</b></div>
+  <div class="ad-box">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-2269884583846743"
+         data-ad-slot="3580304316"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+</div>
 
 </body>
 </html>
