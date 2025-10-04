@@ -23,7 +23,46 @@
         style="max-width:100%; border-radius:10px;">
     </a>
   </div>
+<!-- Responsive Rotating Ads After Every 2 Paragraphs -->
+<script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Select all paragraphs in post content
+  var paragraphs = document.querySelectorAll(".post-body p");
+  if (!paragraphs.length) return;
+
+  // List of AdSense ad units (responsive versions)
+  var ads = [
+    '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="1481343022" data-ad-format="auto" data-full-width-responsive="true"></ins>',
+    '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="3309861448" data-ad-format="fluid" data-ad-layout="in-article"></ins>',
+    '<ins class="adsbygoogle" style="display:block; max-width:100%; height:auto;" data-ad-client="ca-pub-2269884583846743" data-ad-slot="7362967779" data-ad-format="auto"></ins>',
+    '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="3828853509" data-ad-format="auto" data-full-width-responsive="true"></ins>'
+  ];
+
+  var adIndex = 0;
+
+  // Insert ad after every 2 paragraphs
+  for (var i = 1; i < paragraphs.length; i += 2) {
+    var adDiv = document.createElement("div");
+    adDiv.style.textAlign = "center";
+    adDiv.style.margin = "20px 0";
+
+    // Ad label
+    adDiv.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:5px;">Advertisement</div>' + ads[adIndex];
+
+    // Insert ad
+    paragraphs[i].parentNode.insertBefore(adDiv, paragraphs[i].nextSibling);
+
+    // Initialize AdSense
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
+    // Move to next ad in rotation
+    adIndex = (adIndex + 1) % ads.length;
+  }
+});
+</script>
+  
   <!-- Post Title -->
   <h1>The Future of GPU Mining: A Deep Dive into Ethereum's Potential Shift to Proof of Stake</h1>
 
@@ -391,48 +430,9 @@ toggleBtn.addEventListener("click", function() {
   }
 });
 </script>
-
-  <!-- Responsive Rotating Ads After Every 2 Paragraphs -->
-<script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  // Select all paragraphs in post content
-  var paragraphs = document.querySelectorAll(".post-body p");
-  if (!paragraphs.length) return;
-
-  // List of AdSense ad units (responsive versions)
-  var ads = [
-    '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="1481343022" data-ad-format="auto" data-full-width-responsive="true"></ins>',
-    '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="3309861448" data-ad-format="fluid" data-ad-layout="in-article"></ins>',
-    '<ins class="adsbygoogle" style="display:block; max-width:100%; height:auto;" data-ad-client="ca-pub-2269884583846743" data-ad-slot="7362967779" data-ad-format="auto"></ins>',
-    '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2269884583846743" data-ad-slot="3828853509" data-ad-format="auto" data-full-width-responsive="true"></ins>'
-  ];
-
-  var adIndex = 0;
-
-  // Insert ad after every 2 paragraphs
-  for (var i = 1; i < paragraphs.length; i += 2) {
-    var adDiv = document.createElement("div");
-    adDiv.style.textAlign = "center";
-    adDiv.style.margin = "20px 0";
-
-    // Ad label
-    adDiv.innerHTML = '<div style="font-size:12px;color:#666;margin-bottom:5px;">Advertisement</div>' + ads[adIndex];
-
-    // Insert ad
-    paragraphs[i].parentNode.insertBefore(adDiv, paragraphs[i].nextSibling);
-
-    // Initialize AdSense
-    (adsbygoogle = window.adsbygoogle || []).push({});
-
-    // Move to next ad in rotation
-    adIndex = (adIndex + 1) % ads.length;
-  }
-});
-</script>
   
 </body>
 </html>
+
 
 
