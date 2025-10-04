@@ -372,5 +372,72 @@ async function searchPosts(e) {
   <p>Copyright © 2025 Paypalads. All Rights Reserved</p>
 </div>
 
+  <!-- Anchor Ad Placement -->
+<div id="anchor-ad">
+  <div id="anchor-toggle">▲ Ad</div>
+  
+  <div id="anchor-content">
+    <script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
+    <!-- 768x90 Anchor Ad -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:768px;height:90px"
+         data-ad-client="ca-pub-2269884583846743"
+         data-ad-slot="5742141919"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+
+<style>
+#anchor-ad {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 100%;
+  max-width: 768px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+  border-top: 1px solid #ddd;
+  font-family: sans-serif;
+}
+#anchor-toggle {
+  background: #f1f1f1;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  padding: 4px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+#anchor-content {
+  transition: all 0.3s ease;
+}
+body {
+  padding-bottom: 120px; /* keep space for the ad */
+}
+</style>
+
+<script>
+const toggleBtn = document.getElementById("anchor-toggle");
+const content = document.getElementById("anchor-content");
+let hidden = false;
+
+toggleBtn.addEventListener("click", function() {
+  if (!hidden) {
+    content.style.display = "none";
+    toggleBtn.innerHTML = "▼ Ad";
+    hidden = true;
+  } else {
+    content.style.display = "block";
+    toggleBtn.innerHTML = "▲ Ad";
+    hidden = false;
+  }
+});
+</script>
+  
 </body>
 </html>
