@@ -75,6 +75,131 @@
     }
   </style>
 </head>
+  xxxxxxxxxxxxxxxxxxxxxx
+  <!-- Plug-and-Play Live Search Form -->
+<div id="search-container">
+  <form class="search-box">
+    <input type="text" id="search-input" placeholder="Search posts...">
+  </form>
+  <div id="search-results" class="grid"></div>
+</div>
+
+<style>
+.search-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px auto 30px;
+  max-width: 500px;
+  width: 90%;
+  background: #fff;
+  border: 2px solid #ccc;
+  border-radius: 30px;
+  padding: 6px 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.search-box input[type="text"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 30px;
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap:20px; }
+.card { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 8px rgba(0,0,0,0.08); display:flex; flex-direction:column; transition:0.2s;}
+.card:hover { transform:translateY(-4px); box-shadow:0 8px 16px rgba(0,0,0,0.12);}
+.card img { width:100%; height:180px; object-fit:cover; }
+.content { padding:15px; flex-grow:1; }
+.content h2 { font-size:20px; margin:0 0 10px; color:#333; }
+.content p { font-size:14px; color:#666; line-height:1.4; margin-bottom:15px; }
+.read-more { display:inline-block; padding:10px 15px; background:#0073e6; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold; }
+.read-more:hover { background:#005bb5; }
+</style>
+
+<script>
+const username = "lisathahanel";      // your GitHub username
+const repo = "best2topmovies";        // your repo name
+const branch = "main";                // repo branch
+const excludeFiles = ["404.html","index.html"];
+const maxPosts = 36;
+let allPosts = [];
+
+// Load posts from GitHub
+async function loadAllPosts() {
+  try {
+    const treeResp = await fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`);
+    const treeData = await treeResp.json();
+    let files = treeData.tree.filter(f => f.path.endsWith(".html") && !excludeFiles.includes(f.path));
+
+    const filesWithDates = await Promise.all(files.map(async f => {
+      const commitResp = await fetch(`https://api.github.com/repos/${username}/${repo}/commits?path=${f.path}&per_page=1`);
+      const commitData = await commitResp.json();
+      const date = commitData[0]?.commit?.committer?.date || "1970-01-01T00:00:00Z";
+      return {...f, date};
+    }));
+
+    // Sort newest first
+    filesWithDates.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+    let count = 0;
+    for (const file of filesWithDates) {
+      if (count >= maxPosts) break;
+      const url = `https://${username}.github.io/${repo}/${file.path}`;
+      try {
+        const htmlResp = await fetch(url);
+        const htmlText = await htmlResp.text();
+        const doc = new DOMParser().parseFromString(htmlText, "text/html");
+        const img = doc.querySelector("img");
+        if (!img) continue; // skip posts without images
+        const title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path.replace(".html","");
+        const imgSrc = img.src;
+        let excerpt = doc.querySelector("p")?.textContent || "";
+        if (excerpt.length > 150) excerpt = excerpt.substring(0,150) + "...";
+        allPosts.push({ title, imgSrc, excerpt, url });
+        count++;
+      } catch(e) { console.error(e); }
+    }
+
+    displayPosts(allPosts);
+
+  } catch(e) { console.error("Error loading posts:", e); }
+}
+
+// Display posts in results container
+function displayPosts(posts) {
+  const container = document.getElementById("search-results");
+  container.innerHTML = "";
+  if (posts.length === 0) {
+    container.innerHTML = "<p style='text-align:center;'>No posts found.</p>";
+    return;
+  }
+  posts.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${p.imgSrc}" alt="${p.title}">
+      <div class="content">
+        <h2>${p.title}</h2>
+        <p>${p.excerpt}</p>
+        <a class="read-more" href="${p.url}" target="_blank">Read More →</a>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Live search filtering
+document.getElementById("search-input").addEventListener("input", e => {
+  const query = e.target.value.toLowerCase();
+  const filtered = allPosts.filter(p => p.title.toLowerCase().includes(query) || p.excerpt.toLowerCase().includes(query));
+  displayPosts(filtered);
+});
+
+// Initialize
+loadAllPosts();
+</script>
+
 <body>
   <h1>Best2TopMovies – Blog Posts</h1>
   <div class="grid" id="pages-grid">
