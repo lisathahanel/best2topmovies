@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Best2TopMovies – Blog Style</title>
   <style>
     body {
@@ -67,6 +68,11 @@
     .read-more:hover {
       background: #005bb5;
     }
+    @media (max-width: 600px) {
+      .card img {
+        height: 150px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -76,82 +82,85 @@
   </div>
 
   <script>
-    const username = "lisathahanel";   // your GitHub username
-    const repo = "best2topmovies";     // your repo
-    const branch = "main";             // adjust if needed
+    const username = "lisathahanel"; // GitHub username
+    const repo = "best2topmovies";   // repo name
+    const branch = "main";           // branch
 
-    const excludeFiles = ["404.html", "index.html"]; // skip homepage + error page
-    const maxPosts = 36;  // ✅ limit to 36 posts
+    const excludeFiles = ["404.html", "index.html"];
+    const maxPosts = 36;
 
-    fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`)
-      .then(resp => resp.json())
-      .then(data => {
-        const grid = document.getElementById("pages-grid");
-        grid.innerHTML = "";
+    async function getAllFiles() {
+      const resp = await fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`);
+      const data = await resp.json();
+      return data.tree.filter(item => item.path.endsWith(".html") && !excludeFiles.includes(item.path));
+    }
 
-        let count = 0;
+    async function getLastCommitDate(filePath) {
+      const resp = await fetch(`https://api.github.com/repos/${username}/${repo}/commits?path=${filePath}&per_page=1`);
+      const data = await resp.json();
+      return data[0]?.commit?.committer?.date || "1970-01-01T00:00:00Z";
+    }
 
-        const htmlFiles = data.tree.filter(item => 
-          item.path.endsWith(".html") && !excludeFiles.includes(item.path)
-        );
+    async function loadPosts() {
+      const grid = document.getElementById("pages-grid");
+      grid.innerHTML = "";
 
-        if (htmlFiles.length === 0) {
-          grid.innerHTML = "<p>No HTML posts found.</p>";
-          return;
+      let files = await getAllFiles();
+
+      const filesWithDates = await Promise.all(files.map(async f => {
+        const date = await getLastCommitDate(f.path);
+        return { ...f, date };
+      }));
+
+      // Sort newest-first
+      filesWithDates.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      let count = 0;
+
+      for (const file of filesWithDates) {
+        if (count >= maxPosts) break;
+
+        const url = `https://${username}.github.io/${repo}/${file.path}`;
+        try {
+          const htmlResp = await fetch(url);
+          const htmlText = await htmlResp.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlText, "text/html");
+
+          const img = doc.querySelector("img");
+          if (!img) continue; // skip posts without image
+
+          const title = doc.querySelector("h1")?.textContent
+                      || doc.querySelector("title")?.textContent
+                      || file.path.replace(".html", "");
+          const imgSrc = img.src;
+          let excerpt = doc.querySelector("p")?.textContent || "Click below to read this page.";
+
+          if (excerpt.length > 150) {
+            excerpt = excerpt.substring(0, 150).trim() + "...";
+          }
+
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="${imgSrc}" alt="${title}">
+            <div class="content">
+              <h2>${title}</h2>
+              <p>${excerpt}</p>
+              <a class="read-more" href="${url}" target="_blank">Read More →</a>
+            </div>
+          `;
+          grid.appendChild(card);
+          count++;
+        } catch(e) {
+          console.error("Error loading post:", e);
         }
+      }
 
-        htmlFiles.forEach(file => {
-          if (count >= maxPosts) return; // ✅ stop at 36 posts
+      if (count === 0) grid.innerHTML = "<p>No posts with images found.</p>";
+    }
 
-          const url = `https://${username}.github.io/${repo}/${file.path}`;
-
-          fetch(url)
-            .then(r => r.text())
-            .then(html => {
-              if (count >= maxPosts) return; // re-check after async load
-
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, "text/html");
-
-              const img = doc.querySelector("img");
-              if (!img) return; // skip post if no image
-
-              const title = doc.querySelector("h1")?.textContent 
-                         || doc.querySelector("title")?.textContent 
-                         || file.path.replace(".html", "");
-
-              const imgSrc = img.src;
-              let excerpt = doc.querySelector("p")?.textContent 
-                         || "Click below to read this page.";
-              
-              // ✅ limit excerpt length to 150 chars
-              if (excerpt.length > 150) {
-                excerpt = excerpt.substring(0, 150).trim() + "...";
-              }
-
-              // Build card
-              const card = document.createElement("div");
-              card.className = "card";
-              card.innerHTML = `
-                <img src="${imgSrc}" alt="${title}">
-                <div class="content">
-                  <h2>${title}</h2>
-                  <p>${excerpt}</p>
-                  <a class="read-more" href="${url}" target="_blank">Read More →</a>
-                </div>
-              `;
-              grid.appendChild(card);
-
-              count++; // ✅ increment counter
-            })
-            .catch(err => console.error("Error parsing post:", err));
-        });
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        document.getElementById("pages-grid").innerHTML =
-          "<p>⚠️ Unable to load posts. Please check repo/branch.</p>";
-      });
+    loadPosts();
   </script>
 </body>
 </html>
