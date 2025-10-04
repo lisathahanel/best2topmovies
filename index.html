@@ -72,46 +72,62 @@
 <body>
   <h1>Best2TopMovies – Blog Posts</h1>
   <div class="grid" id="pages-grid">
-    <p>Loading pages...</p>
+    <p>Loading posts...</p>
   </div>
 
   <script>
-    const username = "lisathahanel";
-    const repo = "best2topmovies";
-    const branch = "main"; // adjust if needed
+    const username = "lisathahanel";   // your GitHub username
+    const repo = "best2topmovies";     // your repo
+    const branch = "main";             // adjust if needed
 
-    // Step 1: Get HTML files list
+    const excludeFiles = ["404.html", "index.html"]; // skip homepage + error page
+    const maxPosts = 36;  // ✅ limit to 36 posts
+
     fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`)
       .then(resp => resp.json())
       .then(data => {
         const grid = document.getElementById("pages-grid");
         grid.innerHTML = "";
 
-        const htmlFiles = data.tree.filter(item => item.path.endsWith(".html"));
+        let count = 0;
+
+        const htmlFiles = data.tree.filter(item => 
+          item.path.endsWith(".html") && !excludeFiles.includes(item.path)
+        );
 
         if (htmlFiles.length === 0) {
-          grid.innerHTML = "<p>No HTML pages found.</p>";
+          grid.innerHTML = "<p>No HTML posts found.</p>";
           return;
         }
 
         htmlFiles.forEach(file => {
+          if (count >= maxPosts) return; // ✅ stop at 36 posts
+
           const url = `https://${username}.github.io/${repo}/${file.path}`;
 
-          // Step 2: Fetch each page content to extract title, image, and paragraph
           fetch(url)
             .then(r => r.text())
             .then(html => {
+              if (count >= maxPosts) return; // re-check after async load
+
               const parser = new DOMParser();
               const doc = parser.parseFromString(html, "text/html");
 
-              // Extract <title> or first <h1>
-              let title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path;
+              const img = doc.querySelector("img");
+              if (!img) return; // skip post if no image
 
-              // Extract first <img>
-              let imgSrc = doc.querySelector("img")?.src || "https://via.placeholder.com/600x300?text=No+Image";
+              const title = doc.querySelector("h1")?.textContent 
+                         || doc.querySelector("title")?.textContent 
+                         || file.path.replace(".html", "");
 
-              // Extract first paragraph
-              let excerpt = doc.querySelector("p")?.textContent || "Click below to read this page.";
+              const imgSrc = img.src;
+              let excerpt = doc.querySelector("p")?.textContent 
+                         || "Click below to read this page.";
+              
+              // ✅ limit excerpt length to 150 chars
+              if (excerpt.length > 150) {
+                excerpt = excerpt.substring(0, 150).trim() + "...";
+              }
 
               // Build card
               const card = document.createElement("div");
@@ -120,19 +136,21 @@
                 <img src="${imgSrc}" alt="${title}">
                 <div class="content">
                   <h2>${title}</h2>
-                  <p>${excerpt.substring(0, 120)}...</p>
+                  <p>${excerpt}</p>
                   <a class="read-more" href="${url}" target="_blank">Read More →</a>
                 </div>
               `;
               grid.appendChild(card);
+
+              count++; // ✅ increment counter
             })
-            .catch(err => console.error("Error parsing page:", err));
+            .catch(err => console.error("Error parsing post:", err));
         });
       })
       .catch(err => {
         console.error("Error:", err);
         document.getElementById("pages-grid").innerHTML =
-          "<p>⚠️ Unable to load pages. Please check repo/branch.</p>";
+          "<p>⚠️ Unable to load posts. Please check repo/branch.</p>";
       });
   </script>
 </body>
