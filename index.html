@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Best2TopMovies – My Pages</title>
+  <title>Best2TopMovies – Blog Style</title>
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
@@ -17,32 +17,44 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 20px;
     }
     .card {
       background: #fff;
       border-radius: 12px;
-      padding: 20px;
+      overflow: hidden;
       box-shadow: 0 4px 8px rgba(0,0,0,0.08);
       transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
     }
     .card:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0,0,0,0.12);
     }
-    .card h2 {
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #ddd;
+    }
+    .content {
+      padding: 15px;
+      flex-grow: 1;
+    }
+    .content h2 {
       font-size: 20px;
       margin: 0 0 10px;
       color: #333;
     }
-    .card p {
+    .content p {
       font-size: 14px;
       color: #666;
       line-height: 1.4;
       margin-bottom: 15px;
     }
-    .card a {
+    .read-more {
       display: inline-block;
       padding: 10px 15px;
       background: #0073e6;
@@ -52,13 +64,13 @@
       font-weight: bold;
       transition: background 0.2s;
     }
-    .card a:hover {
+    .read-more:hover {
       background: #005bb5;
     }
   </style>
 </head>
 <body>
-  <h1>Best2TopMovies – Pages</h1>
+  <h1>Best2TopMovies – Blog Posts</h1>
   <div class="grid" id="pages-grid">
     <p>Loading pages...</p>
   </div>
@@ -68,6 +80,7 @@
     const repo = "best2topmovies";
     const branch = "main"; // adjust if needed
 
+    // Step 1: Get HTML files list
     fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`)
       .then(resp => resp.json())
       .then(data => {
@@ -83,18 +96,37 @@
 
         htmlFiles.forEach(file => {
           const url = `https://${username}.github.io/${repo}/${file.path}`;
-          const card = document.createElement("div");
-          card.className = "card";
 
-          // use file name as title (cleaned up)
-          const title = file.path.replace(".html", "").replace(/[-_]/g, " ");
+          // Step 2: Fetch each page content to extract title, image, and paragraph
+          fetch(url)
+            .then(r => r.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, "text/html");
 
-          card.innerHTML = `
-            <h2>${title}</h2>
-            <p>This is a preview entry for <strong>${file.path}</strong>. You can edit this text to add a description.</p>
-            <a href="${url}" target="_blank">Read More →</a>
-          `;
-          grid.appendChild(card);
+              // Extract <title> or first <h1>
+              let title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path;
+
+              // Extract first <img>
+              let imgSrc = doc.querySelector("img")?.src || "https://via.placeholder.com/600x300?text=No+Image";
+
+              // Extract first paragraph
+              let excerpt = doc.querySelector("p")?.textContent || "Click below to read this page.";
+
+              // Build card
+              const card = document.createElement("div");
+              card.className = "card";
+              card.innerHTML = `
+                <img src="${imgSrc}" alt="${title}">
+                <div class="content">
+                  <h2>${title}</h2>
+                  <p>${excerpt.substring(0, 120)}...</p>
+                  <a class="read-more" href="${url}" target="_blank">Read More →</a>
+                </div>
+              `;
+              grid.appendChild(card);
+            })
+            .catch(err => console.error("Error parsing page:", err));
         });
       })
       .catch(err => {
