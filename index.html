@@ -123,12 +123,15 @@ async function loadAllPosts() {
         const htmlResp = await fetch(url);
         const htmlText = await htmlResp.text();
         const doc = new DOMParser().parseFromString(htmlText, "text/html");
+
+        // Use first image or placeholder
         const img = doc.querySelector("img");
-        if (!img) continue; // skip posts without images
+        const imgSrc = img ? img.src : "https://via.placeholder.com/300x180?text=No+Image";
+
         const title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path.replace(".html","");
-        const imgSrc = img.src;
         let excerpt = doc.querySelector("p")?.textContent || "";
         if (excerpt.length > 150) excerpt = excerpt.substring(0,150) + "...";
+
         allPosts.push({ title, imgSrc, excerpt, url });
         count++;
       } catch(e) { console.error(e); }
@@ -170,3 +173,143 @@ document.getElementById("search-input").addEventListener("input", e => {
 // Initialize
 loadAllPosts();
 </script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Best2TopMovies – Blog Style</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-bottom: 30px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #ddd;
+    }
+    .content {
+      padding: 15px;
+      flex-grow: 1;
+    }
+    .content h2 {
+      font-size: 20px;
+      margin: 0 0 10px;
+      color: #333;
+    }
+    .content p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+    .read-more {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #0073e6;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .read-more:hover {
+      background: #005bb5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Best2TopMovies – Blog Posts</h1>
+  <div class="grid" id="pages-grid">
+    <p>Loading pages...</p>
+  </div>
+
+  <script>
+    const username = "lisathahanel";
+    const repo = "best2topmovies";
+    const branch = "main"; // adjust if needed
+
+    // Step 1: Get HTML files list
+    fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`)
+      .then(resp => resp.json())
+      .then(data => {
+        const grid = document.getElementById("pages-grid");
+        grid.innerHTML = "";
+
+        const htmlFiles = data.tree.filter(item => item.path.endsWith(".html"));
+
+        if (htmlFiles.length === 0) {
+          grid.innerHTML = "<p>No HTML pages found.</p>";
+          return;
+        }
+
+        htmlFiles.forEach(file => {
+          const url = `https://${username}.github.io/${repo}/${file.path}`;
+
+          // Step 2: Fetch each page content to extract title, image, and paragraph
+          fetch(url)
+            .then(r => r.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const doc = parser.parseFromString(html, "text/html");
+
+              // Extract <title> or first <h1>
+              let title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path;
+
+              // Extract first <img>
+              let imgSrc = doc.querySelector("img")?.src || "https://via.placeholder.com/600x300?text=No+Image";
+
+              // Extract first paragraph
+              let excerpt = doc.querySelector("p")?.textContent || "Click below to read this page.";
+
+              // Build card
+              const card = document.createElement("div");
+              card.className = "card";
+              card.innerHTML = `
+                <img src="${imgSrc}" alt="${title}">
+                <div class="content">
+                  <h2>${title}</h2>
+                  <p>${excerpt.substring(0, 120)}...</p>
+                  <a class="read-more" href="${url}" target="_blank">Read More →</a>
+                </div>
+              `;
+              grid.appendChild(card);
+            })
+            .catch(err => console.error("Error parsing page:", err));
+        });
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        document.getElementById("pages-grid").innerHTML =
+          "<p>⚠️ Unable to load pages. Please check repo/branch.</p>";
+      });
+  </script>
+</body>
+</html>
