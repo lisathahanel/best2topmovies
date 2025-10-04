@@ -1,0 +1,155 @@
+<!-- Slider Container -->
+<div class="swiper mySwiper">
+  <div class="swiper-wrapper" id="movie-slider-posts">
+    <!-- Slides will be injected here -->
+  </div>
+
+  <!-- Slider Controls -->
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<!-- Swiper CSS -->
+<link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet"/>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Movie Slider Script -->
+<script type="text/javascript">
+//<![CDATA[
+function renderMovieSliderPosts(json) {
+  var postsHTML = '';
+  for (var i = 0; i < json.feed.entry.length; i++) {
+    var entry = json.feed.entry[i];
+    var title = entry.title.$t;
+    var url = '';
+    for (var j = 0; j < entry.link.length; j++) {
+      if (entry.link[j].rel === 'alternate') {
+        url = entry.link[j].href;
+        break;
+      }
+    }
+
+    var imgUrl = '';
+    if (entry.media$thumbnail) {
+      imgUrl = entry.media$thumbnail.url.replace(/\/s72\-c\//, '/s1600/');
+    } else {
+      var content = entry.content.$t;
+      var imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
+      imgUrl = imgMatch && imgMatch[1] 
+        ? imgMatch[1].replace(/\/s72\-c\//, '/s1600/') 
+        : 'https://via.placeholder.com/300x450?text=No+Image';
+    }
+
+    postsHTML += `
+      <div class="swiper-slide">
+        <div class="movie-card">
+          <a href="${url}" title="${title}">
+            <div class="poster">
+              <img src="${imgUrl}" alt="${title}" loading="lazy">
+              <div class="play-button">&#9658;</div>
+            </div>
+            <div class="movie-title">${title}</div>
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  document.getElementById('movie-slider-posts').innerHTML = postsHTML;
+
+  // Initialize Swiper
+  new Swiper(".mySwiper", {
+    slidesPerView: 1,
+    centeredSlides: true,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    }
+  });
+}
+//]]>
+</script>
+
+<!-- Blogger JSON Feed -->
+<script src="https://www.paypalads.com/feeds/posts/default/-/cytimobe?alt=json-in-script&amp;callback=renderMovieSliderPosts"></script>
+
+<!-- Slider Styles -->
+<style>
+.mySwiper {
+  max-width: 500px; /* smaller container */
+  margin: 0 auto;
+}
+
+.movie-card {
+  background: #111;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+.poster {
+  position: relative;
+  width: 100%;
+  padding: 20px; /* gives space around the small image */
+}
+
+.movie-card img {
+  width: 60%;           /* make image smaller */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #000;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;       /* BIG play button */
+  color: white;
+  background: rgba(229, 9, 20, 0.95);
+  border-radius: 50%;
+  width: 100px; height: 100px;
+  text-align: center;
+  line-height: 100px;
+  box-shadow: 0 0 25px #e50914;
+  pointer-events: none;
+}
+
+.movie-title {
+  padding: 14px;
+  font-size: 22px;   /* big title */
+  font-weight: 700;
+  color: #fff;
+  background: #e50914;
+  margin-top: 10px;
+  text-transform: capitalize;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .mySwiper { max-width: 100%; }
+  .movie-card img { width: 70%; }
+  .play-button {
+    font-size: 60px;
+    width: 80px; height: 80px;
+    line-height: 80px;
+  }
+  .movie-title { font-size: 18px; }
+}
+</style>
