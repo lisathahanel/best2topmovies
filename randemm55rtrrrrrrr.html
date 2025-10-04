@@ -155,10 +155,260 @@
   <a href="https://www.paypalads.com/2015/12/job-matching-across-ireland-singapore.html" class="menu-jobs">Jobs</a>
 </div>
 
+  <style>
+  .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 posts per row */
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .movie-card {
+    background: #111;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+    transition: transform 0.3s ease;
+  }
+
+  .movie-card:hover {
+    transform: scale(1.05);
+  }
+
+  .poster {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 2/3;
+  }
+
+  .poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.4s ease-in-out;
+  }
+
+  .movie-card:hover img {
+    filter: brightness(0.5);
+    transform: scale(1.05);
+  }
+
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    color: white;
+    background: rgba(229,9,20,0.9);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    box-shadow: 0 0 20px #e50914;
+    pointer-events: none;
+  }
+
+  .movie-title {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    background: #e50914;
+    color: white;
+    text-transform: capitalize;
+  }
+
+  @media (max-width: 1024px) {
+    .movie-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .movie-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      padding: 15px;
+    }
+
+    .play-button {
+      font-size: 36px;
+      width: 55px;
+      height: 55px;
+      line-height: 55px;
+    }
+
+    .movie-title {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .movie-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // Fetch latest 20 posts from WordPress REST API
+  fetch('https://m2a.shop/wp-json/wp/v2/posts?per_page=20&_embed')
+    .then(res => res.json())
+    .then(posts => {
+      let html = '<div class="movie-grid">';
+      posts.forEach(post => {
+        const title = post.title.rendered;
+        const url = post.link;
+
+        // Get featured image if exists
+        let imgUrl = post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]
+          ? post._embedded['wp:featuredmedia'][0].source_url
+          : 'https://via.placeholder.com/300x450?text=No+Image';
+
+        html += `
+          <div class="movie-card">
+            <a href="${url}" title="${title}">
+              <div class="poster">
+                <img src="${imgUrl}" alt="${title}" loading="lazy">
+                <div class="play-button">&#9658;</div>
+              </div>
+              <div class="movie-title">${title}</div>
+            </a>
+          </div>
+        `;
+      });
+      html += '</div>';
+      document.getElementById('movie-label-posts').innerHTML = html;
+    })
+    .catch(err => console.error('Error fetching posts:', err));
+</script>
+
+    </p>
+
+  </main>
+<style>
+  .footer {
+    background-color: gold; /* gold background */
+    color: black;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px 10px;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .footer-links a {
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .footer-links a:hover {
+    background-color: black;
+    color: white;
+  }
+
+  .footer p {
+    margin: 5px 0;
+  }
+</style>
+
+<div class="footer">
+  <div class="footer-links">
+    <a href="https://www.paypalads.com/2020/12/contact-us.html">Contact Us</a>
+    <a href="https://www.firimumu.paypalads.com/">Movies</a>
+    <a href="https://www.paypalads.com/p/privacy-policy.html">Privacy Policy</a>
+    <a href="https://www.paypalads.com/p/terms-and-conditions.html">Terms & Conditions</a>
+    <a href="https://www.paypalads.com/p/affiliate-marketing-and-adsense.html">Disclosure</a>
+  </div>
+  <p>Copyright © 2025 Paypalads. All Rights Reserved</p>
+</div>
+
+  <!-- Anchor Ad Placement -->
+<div id="anchor-ad">
+  <div id="anchor-toggle">▲ Ad</div>
+  
+  <div id="anchor-content">
+    <script async="async" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743" crossorigin="anonymous"></script>
+    <!-- 768x90 Anchor Ad -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:768px;height:90px"
+         data-ad-client="ca-pub-2269884583846743"
+         data-ad-slot="5742141919"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+
+<style>
+#anchor-ad {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: 100%;
+  max-width: 768px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+  border-top: 1px solid #ddd;
+  font-family: sans-serif;
+}
+#anchor-toggle {
+  background: #f1f1f1;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  padding: 4px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+#anchor-content {
+  transition: all 0.3s ease;
+}
+body {
+  padding-bottom: 120px; /* keep space for the ad */
+}
+</style>
+
+<script>
+const toggleBtn = document.getElementById("anchor-toggle");
+const content = document.getElementById("anchor-content");
+let hidden = false;
+
+toggleBtn.addEventListener("click", function() {
+  if (!hidden) {
+    content.style.display = "none";
+    toggleBtn.innerHTML = "▼ Ad";
+    hidden = true;
+  } else {
+    content.style.display = "block";
+    toggleBtn.innerHTML = "▲ Ad";
+    hidden = false;
+  }
+});
+</script>
   
   
 </body>
 </html>
+
 
 
 
