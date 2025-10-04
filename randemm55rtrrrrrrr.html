@@ -155,10 +155,12 @@
   <a href="https://www.paypalads.com/2015/12/job-matching-across-ireland-singapore.html" class="menu-jobs">Jobs</a>
 </div>
 
-  <style>
+  <div id="movie-label-posts"></div>
+
+<style>
   .movie-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 posts per row */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
     padding: 30px;
   }
@@ -220,13 +222,7 @@
     text-transform: capitalize;
   }
 
-  @media (max-width: 1024px) {
-    .movie-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .movie-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 14px;
@@ -245,34 +241,25 @@
       padding: 10px;
     }
   }
-
-  @media (max-width: 480px) {
-    .movie-grid {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>
 
 <script>
   // Fetch latest 20 posts from WordPress REST API
-  fetch('https://m2a.shop/wp-json/wp/v2/posts?per_page=20&_embed')
+  fetch('https://gynecologist.shop/wp-json/wp/v2/posts?per_page=20&_embed')
     .then(res => res.json())
     .then(posts => {
       let html = '<div class="movie-grid">';
       posts.forEach(post => {
         const title = post.title.rendered;
         const url = post.link;
-
         // Get featured image if exists
-        let imgUrl = post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]
-          ? post._embedded['wp:featuredmedia'][0].source_url
-          : 'https://via.placeholder.com/300x450?text=No+Image';
+        let imgUrl = post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0] ? post._embedded['wp:featuredmedia'][0].source_url : 'https://via.placeholder.com/300x450?text=No+Image';
 
         html += `
           <div class="movie-card">
             <a href="${url}" title="${title}">
               <div class="poster">
-                <img src="${imgUrl}" alt="${title}" loading="lazy">
+                <img src="${imgUrl}" alt="${title}">
                 <div class="play-button">&#9658;</div>
               </div>
               <div class="movie-title">${title}</div>
@@ -408,8 +395,3 @@ toggleBtn.addEventListener("click", function() {
   
 </body>
 </html>
-
-
-
-
-
