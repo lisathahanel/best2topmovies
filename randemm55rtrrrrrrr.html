@@ -93,7 +93,72 @@
   font-size: inherit !important;
 }
 </style>
+
+<style>
+  /* Normal (non-sticky) top menu */
+  .menu-bar {
+    width: 70%; /* your desired width */
+    max-width: 1000px;
+    margin: 20px auto; /* centers the bar with some spacing from top */
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .menu-bar a {
+    font-family: Georgia, "Palatino Linotype", Palatino, serif;
+    font-weight: 700;
+    padding: 8px 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    border-radius: 6px;
+    transition: opacity 0.3s;
+  }
+
+  .menu-bar a:hover {
+    opacity: 0.8;
+  }
+
+  /* Link colors */
+  .menu-home { background-color: #04ff00; color: #ff00fe; }
+  .menu-movies { background-color: #3d85c6; color: #ffa400; }
+  .menu-blogs { background-color: #fcff01; color: #351c75; }
+  .menu-about { background-color: #01ffff; color: #cc0000; }
+  .menu-contact { background-color: #4c1130; color: #fcff01; font-family: Roboto; }
+  .menu-jobs { background-color: #ff00fe; color: #04ff00; }
+
+  /* Responsive: shrink menu width on smaller screens */
+  @media (max-width: 600px) {
+    .menu-bar {
+      width: 95%;
+    }
+    .menu-bar a {
+      font-size: 16px;
+      padding: 6px 10px;
+    }
+  }
+</style>
+
+<div class="menu-bar">
+  <a href="/" class="menu-home">Home</a>
+  <a href="https://www.paypalads.com/search/label/movies1000" class="menu-movies">Movies</a>
+  <a href="https://www.paypalads.com/search" class="menu-blogs">Blogs</a>
+  <a href="https://www.paypalads.com/p/about-us.html" class="menu-about">About</a>
+  <a href="https://www.paypalads.com/p/contact-us_14.html" class="menu-contact">Contact</a>
+  <a href="https://www.paypalads.com/2015/12/job-matching-across-ireland-singapore.html" class="menu-jobs">Jobs</a>
+</div>
+
+  
+  
 </body>
 </html>
+
 
 
