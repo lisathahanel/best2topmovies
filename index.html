@@ -1,13 +1,25 @@
-<!-- Live Search Form -->
-<div id="search-container">
-  <form class="search-box">
-    <input type="text" id="search-input" placeholder="Search posts...">
-  </form>
-  <div id="search-results" class="movie-grid"></div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayPalads – Learning & Entertainment</title>
 
 <style>
-/* Search box styling */
+/* Global Styles */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 30px;
+}
+
+/* Search Box */
 .search-box {
   display: flex;
   justify-content: center;
@@ -30,15 +42,13 @@
   border-radius: 30px;
 }
 
-/* Movie card grid */
+/* Movie Grid & Cards */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
   gap: 20px;
   margin: 20px;
 }
-
-/* Movie card */
 .movie-card {
   background:#111;
   border-radius:8px;
@@ -88,250 +98,8 @@
 .movie-card .read-more:hover {
   background:#005bb5;
 }
-</style>
 
-<script>
-const username = "lisathahanel";
-const repo = "best2topmovies";
-const branch = "main";
-const excludeFiles = ["404.html","index.html"];
-const maxPosts = 36;
-let allPosts = [];
-
-// Load posts from GitHub
-async function loadAllPosts() {
-  try {
-    const treeResp = await fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`);
-    const treeData = await treeResp.json();
-    let files = treeData.tree.filter(f => f.path.endsWith(".html") && !excludeFiles.includes(f.path));
-
-    const filesWithDates = await Promise.all(files.map(async f => {
-      const commitResp = await fetch(`https://api.github.com/repos/${username}/${repo}/commits?path=${f.path}&per_page=1`);
-      const commitData = await commitResp.json();
-      const date = commitData[0]?.commit?.committer?.date || "1970-01-01T00:00:00Z";
-      return {...f, date};
-    }));
-
-    // Sort newest first
-    filesWithDates.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-    let count = 0;
-    for (const file of filesWithDates) {
-      if (count >= maxPosts) break;
-      const url = `https://${username}.github.io/${repo}/${file.path}`;
-      try {
-        const htmlResp = await fetch(url);
-        const htmlText = await htmlResp.text();
-        const doc = new DOMParser().parseFromString(htmlText, "text/html");
-
-        // Use first image or placeholder
-        const img = doc.querySelector("img");
-        const imgSrc = img ? img.src : "https://via.placeholder.com/300x180?text=No+Image";
-
-        const title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path.replace(".html","");
-        let excerpt = doc.querySelector("p")?.textContent || "";
-        if (excerpt.length > 150) excerpt = excerpt.substring(0,150) + "...";
-
-        allPosts.push({ title, imgSrc, excerpt, url });
-        count++;
-      } catch(e) { console.error(e); }
-    }
-
-    displayPosts(allPosts);
-
-  } catch(e) { console.error("Error loading posts:", e); }
-}
-
-// Display posts in movie card style
-function displayPosts(posts) {
-  const container = document.getElementById("search-results");
-  container.innerHTML = "";
-  if (posts.length === 0) {
-    container.innerHTML = "<p style='text-align:center; color:#fff;'>No posts found.</p>";
-    return;
-  }
-  posts.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "movie-card";
-    card.innerHTML = `
-      <img src="${p.imgSrc}" alt="${p.title}">
-      <div class="movie-title">${p.title}</div>
-      <div class="movie-excerpt">${p.excerpt}</div>
-      <a class="read-more" href="${p.url}" target="_blank">Read More →</a>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// Live search filtering
-document.getElementById("search-input").addEventListener("input", e => {
-  const query = e.target.value.toLowerCase();
-  const filtered = allPosts.filter(p => p.title.toLowerCase().includes(query) || p.excerpt.toLowerCase().includes(query));
-  displayPosts(filtered);
-});
-
-// Initialize
-loadAllPosts();
-</script>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f7f7f7;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #222;
-      margin-bottom: 30px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      flex-direction: column;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-    }
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      background: #ddd;
-    }
-    .content {
-      padding: 15px;
-      flex-grow: 1;
-    }
-    .content h2 {
-      font-size: 20px;
-      margin: 0 0 10px;
-      color: #333;
-    }
-    .content p {
-      font-size: 14px;
-      color: #666;
-      line-height: 1.4;
-      margin-bottom: 15px;
-    }
-    .read-more {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #0073e6;
-      color: #fff;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-    .read-more:hover {
-      background: #005bb5;
-    }
-  </style>
-</head>
-<body>
-  <h1>PayPalads – where learning and entertainment thrive</h1>
-  <div class="grid" id="pages-grid">
-  </div>
-
-  <script>
-    const username = "lisathahanel";
-    const repo = "best2topmovies";
-    const branch = "main"; // adjust if needed
-
-    // Step 1: Get HTML files list
-    fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`)
-      .then(resp => resp.json())
-      .then(data => {
-        const grid = document.getElementById("pages-grid");
-        grid.innerHTML = "";
-
-        const htmlFiles = data.tree.filter(item => item.path.endsWith(".html"));
-
-        if (htmlFiles.length === 0) {
-          grid.innerHTML = "<p>No HTML pages found.</p>";
-          return;
-        }
-
-        htmlFiles.forEach(file => {
-          const url = `https://${username}.github.io/${repo}/${file.path}`;
-
-          // Step 2: Fetch each page content to extract title, image, and paragraph
-          fetch(url)
-            .then(r => r.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, "text/html");
-
-              // Extract <title> or first <h1>
-              let title = doc.querySelector("h1")?.textContent || doc.querySelector("title")?.textContent || file.path;
-
-              // Extract first <img>
-              let imgSrc = doc.querySelector("img")?.src || "https://via.placeholder.com/600x300?text=No+Image";
-
-              // Extract first paragraph
-              let excerpt = doc.querySelector("p")?.textContent || "Click below to read this page.";
-
-              // Build card
-              const card = document.createElement("div");
-              card.className = "card";
-              card.innerHTML = `
-                <img src="${imgSrc}" alt="${title}">
-                <div class="content">
-                  <h2>${title}</h2>
-                  <p>${excerpt.substring(0, 120)}...</p>
-                  <a class="read-more" href="${url}" target="_blank">Read More →</a>
-                </div>
-              `;
-              grid.appendChild(card);
-            })
-            .catch(err => console.error("Error parsing page:", err));
-        });
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        document.getElementById("pages-grid").innerHTML =
-          "<p>⚠️ Unable to load pages. Please check repo/branch.</p>";
-      });
-  </script>
-  <div style="background-color: white; color: black; font-family: Georgia, serif; font-size: medium; padding: 10px; text-align: center;">
-  <p>
-    <a href="https://www.paypalads.com/contact-us.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Contact Us</a>
-  </p>
-  <p>
-    <a href="https://www.firimumu.paypalads.com/" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Movies</a>
-  </p>
-  <p>
-    <a href="https://www.paypalads.com/privacy-policy.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Privacy Policy</a>
-  </p>
-  <p>
-    <a href="https://www.paypalads.com/terms-and-conditions.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Terms &amp; Conditions</a>
-  </p>
-  <p>
-    <a href="https://www.paypalads.com/affiliate-marketing-and-adsense.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Disclosure</a><a href="https://www.paypalads.com/" style="background-color: #04ff00; color: #ff00fe; display: inline-block; font-family: Georgia, Utopia, &quot;Palatino Linotype&quot;, Palatino, serif; font-weight: 700; margin: 4px; padding: 8px 12px; text-decoration-line: none; text-transform: uppercase; text-wrap-mode: nowrap;"><span style="font-size: medium;">Home</span></a></p></div>
-
-<p style="background-color: white; border-top: 1px solid rgb(0, 0, 0); color: black; font-family: Georgia, serif; padding: 8px; text-align: center;">
-  Copyright © 2025 Paypalads All Rights Reserved
-</p>
-<div style="background-color: gold; height: 160px; margin: 10px 0px; width: 100%;"></div>
-
-<style>
-/* Bottom sticky footer */
+/* Sticky Footer */
 #sticky-footer {
   position: fixed;
   bottom: 0;
@@ -344,15 +112,11 @@ loadAllPosts();
   padding: 10px 0 5px;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
-
-/* Ad container centered */
 #sticky-footer .ad-box {
   display: flex;
   justify-content: center;
   margin-bottom: 8px;
 }
-
-/* Menu links wrapper - scrollable if overflow */
 #sticky-footer .menu {
   display: flex;
   overflow-x: auto;
@@ -361,8 +125,6 @@ loadAllPosts();
   gap: 8px;
   padding: 5px;
 }
-
-/* Individual menu links */
 #sticky-footer .menu a {
   flex: 0 0 auto;
   font-family: Georgia, Utopia, "Palatino Linotype", Palatino, serif;
@@ -377,8 +139,6 @@ loadAllPosts();
 #sticky-footer .menu a:hover {
   opacity: 0.8;
 }
-
-/* Hide scrollbar but keep scrollable */
 #sticky-footer .menu::-webkit-scrollbar {
   display: none;
 }
@@ -386,14 +146,27 @@ loadAllPosts();
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 #sticky-footer .ad-label {
   text-align: center;
   font-size: x-small;
   margin-top: 3px;
 }
 </style>
+</head>
 
+<body>
+
+<h1>PayPalads – Learning & Entertainment</h1>
+
+<!-- Live Search Form -->
+<div id="search-container">
+  <form class="search-box">
+    <input type="text" id="search-input" placeholder="Search posts...">
+  </form>
+  <div id="search-results" class="movie-grid"></div>
+</div>
+
+<!-- Footer -->
 <div id="sticky-footer">
   <!-- Top Ad -->
   <div class="ad-box">
@@ -422,12 +195,64 @@ loadAllPosts();
   <div class="ad-label">Ad</div>
 </div>
 
+<!-- Google Ads Script -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
   (adsbygoogle = window.adsbygoogle || []).push({});
   (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 
+<!-- Optimized Search Script (JSON based) -->
+<script>
+const maxPosts = 36;
+let allPosts = [];
+
+async function loadAllPosts() {
+  try {
+    // Replace this URL with your hosted JSON of all posts
+    const resp = await fetch('https://username.github.io/repo/posts.json');
+    allPosts = await resp.json();
+    displayPosts(allPosts);
+  } catch(e) {
+    console.error("Error loading posts:", e);
+    document.getElementById("search-results").innerHTML = "<p style='text-align:center; color:#fff;'>Failed to load posts.</p>";
+  }
+}
+
+function displayPosts(posts) {
+  const container = document.getElementById("search-results");
+  container.innerHTML = "";
+  if(posts.length === 0) {
+    container.innerHTML = "<p style='text-align:center; color:#fff;'>No posts found.</p>";
+    return;
+  }
+  posts.slice(0, maxPosts).forEach(p => {
+    if(!p.imgSrc) return; // skip posts without images
+    const card = document.createElement("div");
+    card.className = "movie-card";
+    card.innerHTML = `
+      <img src="${p.imgSrc}" alt="${p.title}">
+      <div class="movie-title">${p.title}</div>
+      <div class="movie-excerpt">${p.excerpt.substring(0,150)}...</div>
+      <a class="read-more" href="${p.url}" target="_blank">Read More →</a>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Live search filtering
+document.getElementById("search-input").addEventListener("input", e => {
+  const query = e.target.value.toLowerCase();
+  const filtered = allPosts.filter(p =>
+    (p.title && p.title.toLowerCase().includes(query)) ||
+    (p.excerpt && p.excerpt.toLowerCase().includes(query))
+  );
+  displayPosts(filtered);
+});
+
+// Initialize
+loadAllPosts();
+</script>
 
 </body>
 </html>
