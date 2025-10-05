@@ -33,6 +33,248 @@
       </iframe>
     </div>
   </main>
+<style>  
+  body {
+    zoom: 0.9;
+  }
 
+  /* Bottom sticky footer */
+  #sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;                    /* center horizontally */
+    transform: translateX(-50%);
+    width: 100%;
+    background: #fff;
+    border-top: 2px solid #ccc;
+    z-index: 9999;
+    padding: 5px 0;
+  }
+
+  /* Ad container centered */
+  #sticky-footer .ad-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+
+  /* Menu links wrapper - scrollable if overflow */
+  #sticky-footer .menu {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 5px;
+  }
+
+  /* Individual menu links */
+  #sticky-footer a {
+    flex: 0 0 auto;
+    font-family: Georgia, Utopia, &quot;Palatino Linotype&quot;, Palatino, serif;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  #sticky-footer .menu::-webkit-scrollbar {
+    display: none;
+  }
+  #sticky-footer .menu {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<!-- Bottom Sticky Footer -->
+<div id='sticky-footer'>
+  
+  </div><style>
+  .search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    max-width: 500px;
+    width: 90%;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 30px;
+  }
+  .search-box button {
+    background: gold;
+    border: none;
+    padding: 10px 18px;
+    margin-left: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    transition: 0.3s;
+  }
+  .search-box button:hover { background: #e6b800; }
+
+  #results {
+    max-width: 1000px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .result-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+  }
+  .result-card:hover { transform: translateY(-4px); }
+  .result-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  .result-card-content {
+    padding: 12px;
+  }
+  .result-card a {
+    font-size: 16px;
+    font-weight: bold;
+    color: #222;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .result-card p {
+    font-size: 14px;
+    color: #555;
+  }
+</style>
+
+<form class="search-box" onsubmit="searchPosts(event)">
+  <input id="search-input" placeholder="Search paypalads.com..." type="text"/>
+  <button type="submit">Search</button>
+</form>
+
+<div id="results"></div>
+
+<script>
+async function searchPosts(e) {
+  e.preventDefault();
+  const query = document.getElementById("search-input").value;
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "<p>Loading...</p>";
+
+  try {
+    const res = await fetch(`https://m2a.shop/wp-json/wp/v2/posts?_embed&search=${encodeURIComponent(query)}`);
+    const posts = await res.json();
+
+    if (posts.length === 0) {
+      resultsDiv.innerHTML = "<p>No results found.</p>";
+      return;
+    }
+
+    resultsDiv.innerHTML = posts.map(post => {
+      let img = "";
+      if (post._embedded && post._embedded['wp:featuredmedia']) {
+        img = `<img src="${post._embedded['wp:featuredmedia'][0].source_url}" alt="${post.title.rendered}">`;
+      }
+
+      return `
+        <div class="result-card">
+          ${img}
+          <div class="result-card-content">
+            <a href="${post.link}" target="_blank">${post.title.rendered}</a>
+            <p>${post.excerpt.rendered.replace(/<[^>]+>/g, "").substring(0, 120)}...</p>
+          </div>
+        </div>
+      `;
+    }).join("");
+  } catch (err) {
+    resultsDiv.innerHTML = "<p>Error fetching results.</p>";
+  }
+}
+</script>
+
+
+  <div class='menu'>
+    <a href='' style='background-color:#04ff00;color:#ff00fe;'></a>
+    <a href='' style='background-color:#3d85c6;color:#ffa400;'></a>
+    <a href='' style='background-color:#fcff01;color:#351c75;'></a>
+    <a href='' style='background-color:#01ffff;color:#cc0000;'></a>
+    <a href='' style='background-color:#ff00fe;color:#04ff00;'></a>
+  </div>
+  
+  <div style='text-align: center;'><b><span style='font-size: x-small;'>Ad</span></b></div><div style='text-align: center;'><b><span style='font-size: x-small;'>
+  
+  <div id='ad-rotation' style='text-align:center; position: relative;'>
+  <div class='ad-slot' style='display:block; opacity:1; transition: opacity 1s;'>
+    <!-- Square ads -->
+    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-format='auto' data-ad-slot='3828853509' data-full-width-responsive='true' style='display:block'/>
+  </ins></div>
+
+  <div class='ad-slot' style='display:block; opacity:0; transition: opacity 1s; position:absolute; top:0; left:50%; transform:translateX(-50%);'>
+    <!-- 728 by 90 new -->
+    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='3580304316' style='display:inline-block;width:728px;height:90px'/>
+  </ins></div>
+
+  <div class='ad-slot' style='display:block; opacity:0; transition: opacity 1s; position:absolute; top:0; left:50%; transform:translateX(-50%);'>
+    <!-- 270 by 90 -->
+    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='6412492966' style='display:inline-block;width:270px;height:90px'/>
+  </ins></div>
+
+  <div class='ad-slot' style='display:block; opacity:0; transition: opacity 1s; position:absolute; top:0; left:50%; transform:translateX(-50%);'>
+    <!-- 250 by 250 -->
+    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='1005180622' style='display:inline-block;width:250px;height:250px'/>
+  </ins></div>
+</div>
+
+<script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743'/>
+
+<script>
+  // Initialize all ads
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  (adsbygoogle = window.adsbygoogle || []).push({});
+  (adsbygoogle = window.adsbygoogle || []).push({});
+
+  let currentAd = 0;
+  const adSlots = document.querySelectorAll(&#39;#ad-rotation .ad-slot&#39;);
+
+  setInterval(() =&gt; {
+    // Fade out current ad
+    adSlots[currentAd].style.opacity = 0;
+
+    // Move to next ad
+    currentAd = (currentAd + 1) % adSlots.length;
+
+    // Fade in next ad
+    adSlots[currentAd].style.opacity = 1;
+
+    // Reinitialize AdSense for the newly visible ad
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  }, 35000); // 35 seconds
+</script>
+
+  
+  </span></b></div>
+  
+</div>
 </body>
 </html>
