@@ -212,8 +212,193 @@ async function searchPosts(e) {
 }
 </script>
 
+ <style>  
+  body {
+    zoom: 0.9;
+  }
 
+  /* Bottom sticky footer */
+  #sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;                    /* center horizontally */
+    transform: translateX(-50%);
+    width: 90;
+    background: #fff;
+    border-top: 2px solid #ccc;
+    z-index: 9999;
+    padding: 5px 0;
+  }
+
+  /* Ad container centered */
+  #sticky-footer .ad-box {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+  }
+
+  /* Menu links wrapper - scrollable if overflow */
+  #sticky-footer .menu {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 5px;
+  }
+
+  /* Individual menu links */
+  #sticky-footer a {
+    flex: 0 0 auto;
+    font-family: Georgia, Utopia, &quot;Palatino Linotype&quot;, Palatino, serif;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  #sticky-footer .menu::-webkit-scrollbar {
+    display: none;
+  }
+  #sticky-footer .menu {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<!-- Bottom Sticky Footer -->
+<div id='sticky-footer'>
+  <div class='ad-box'>
+    
+    <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743'/>
+    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='6412492966' style='display:inline-block;width:270px;height:90px'/>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <div class='menu'>
+    <a href='' style='background-color:#04ff00;color:#ff00fe;'></a>
+    <a href='' style='background-color:#3d85c6;color:#ffa400;'></a>
+    <a href='' style='background-color:#fcff01;color:#351c75;'></a>
+    <a href='' style='background-color:#01ffff;color:#cc0000;'></a>
+    <a href='' style='background-color:#ff00fe;color:#04ff00;'></a>
+  </div>
+  
+ 
+  </span></b></div>
   
 </div>
+<!-- Anchor Ad Placement -->
+<div id="anchor-ad-left">
+  <div id="anchor-toggle-left">▲ Ad</div>
+  <div id="anchor-content-left">
+    <script async="async" src="" crossorigin="anonymous"></script>
+    <!-- 160x600 Anchor Ad -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:160px;height:600px"
+         data-ad-client="ca-pub-2269884583846743"
+         data-ad-slot="5742141919"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+
+<div id="anchor-ad-right">
+  <div id="anchor-toggle-right">▲ Ad</div>
+  <div id="anchor-content-right">
+    <script async="async" src="" crossorigin="anonymous"></script>
+    <!-- 160x600 Anchor Ad -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:160px;height:600px"
+         data-ad-client="ca-pub-2269884583846743"
+         data-ad-slot="5742141919"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+</div>
+
+<style>
+  /* Hide ads on mobile and tablet */
+  @media (max-width: 1024px) {
+    #anchor-ad-left, #anchor-ad-right {
+      display: none !important;
+    }
+  }
+
+  /* Show ads only on desktop */
+  @media (min-width: 1025px) {
+    #anchor-ad-left, #anchor-ad-right {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9999;
+      text-align: center;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      border: 1px solid #ddd;
+      font-family: sans-serif;
+    }
+
+    #anchor-ad-left {
+      left: 0;
+    }
+
+    #anchor-ad-right {
+      right: 0;
+    }
+
+    #anchor-toggle-left, #anchor-toggle-right {
+      background: #f1f1f1;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      padding: 4px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #anchor-content-left, #anchor-content-right {
+      transition: all 0.3s ease;
+    }
+  }
+</style>
+
+<script>
+  const toggleBtnLeft = document.getElementById("anchor-toggle-left");
+  const contentLeft = document.getElementById("anchor-content-left");
+  const toggleBtnRight = document.getElementById("anchor-toggle-right");
+  const contentRight = document.getElementById("anchor-content-right");
+
+  let hiddenLeft = false;
+  let hiddenRight = false;
+
+  toggleBtnLeft.addEventListener("click", function() {
+    if (!hiddenLeft) {
+      contentLeft.style.display = "none";
+      toggleBtnLeft.innerHTML = "▼ Ad";
+      hiddenLeft = true;
+    } else {
+      contentLeft.style.display = "block";
+      toggleBtnLeft.innerHTML = "▲ Ad";
+      hiddenLeft = false;
+    }
+  });
+
+  toggleBtnRight.addEventListener("click", function() {
+    if (!hiddenRight) {
+      contentRight.style.display = "none";
+      toggleBtnRight.innerHTML = "▼ Ad";
+      hiddenRight = true;
+    } else {
+      contentRight.style.display = "block";
+      toggleBtnRight.innerHTML = "▲ Ad";
+      hiddenRight = false;
+    }
+  });
+</script>
 </body>
 </html>
