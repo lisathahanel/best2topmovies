@@ -213,67 +213,6 @@ async function searchPosts(e) {
 </script>
 
 
-  <div class='menu'>
-    <a href='' style='background-color:#04ff00;color:#ff00fe;'></a>
-    <a href='' style='background-color:#3d85c6;color:#ffa400;'></a>
-    <a href='' style='background-color:#fcff01;color:#351c75;'></a>
-    <a href='' style='background-color:#01ffff;color:#cc0000;'></a>
-    <a href='' style='background-color:#ff00fe;color:#04ff00;'></a>
-  </div>
-  
-  <div style='text-align: center;'><b><span style='font-size: x-small;'>Ad</span></b></div><div style='text-align: center;'><b><span style='font-size: x-small;'>
-  
-  <div id='ad-rotation' style='text-align:center; position: relative;'>
-  <div class='ad-slot' style='display:block; opacity:1; transition: opacity 1s;'>
-    <!-- Square ads -->
-    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-format='auto' data-ad-slot='3828853509' data-full-width-responsive='true' style='display:block'/>
-  </ins></div>
-
-  <div class='ad-slot' style='display:block; opacity:0; transition: opacity 1s; position:absolute; top:0; left:50%; transform:translateX(-50%);'>
-    <!-- 728 by 90 new -->
-    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='3580304316' style='display:inline-block;width:728px;height:90px'/>
-  </ins></div>
-
-  <div class='ad-slot' style='display:block; opacity:0; transition: opacity 1s; position:absolute; top:0; left:50%; transform:translateX(-50%);'>
-    <!-- 270 by 90 -->
-    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='6412492966' style='display:inline-block;width:270px;height:90px'/>
-  </ins></div>
-
-  <div class='ad-slot' style='display:block; opacity:0; transition: opacity 1s; position:absolute; top:0; left:50%; transform:translateX(-50%);'>
-    <!-- 250 by 250 -->
-    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='1005180622' style='display:inline-block;width:250px;height:250px'/>
-  </ins></div>
-</div>
-
-<script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743'/>
-
-<script>
-  // Initialize all ads
-  (adsbygoogle = window.adsbygoogle || []).push({});
-  (adsbygoogle = window.adsbygoogle || []).push({});
-  (adsbygoogle = window.adsbygoogle || []).push({});
-  (adsbygoogle = window.adsbygoogle || []).push({});
-
-  let currentAd = 0;
-  const adSlots = document.querySelectorAll(&#39;#ad-rotation .ad-slot&#39;);
-
-  setInterval(() =&gt; {
-    // Fade out current ad
-    adSlots[currentAd].style.opacity = 0;
-
-    // Move to next ad
-    currentAd = (currentAd + 1) % adSlots.length;
-
-    // Fade in next ad
-    adSlots[currentAd].style.opacity = 1;
-
-    // Reinitialize AdSense for the newly visible ad
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  }, 35000); // 35 seconds
-</script>
-
-  
-  </span></b></div>
   
 </div>
 </body>
