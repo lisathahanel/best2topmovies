@@ -8,22 +8,8 @@
   <!-- SEO Meta -->
   <meta name="description" content="Season 3 Episode 3 SQUID GAME - VJ Junior Enjogerere translated by Vj Junior. Watch and Download full Movie translated by VJ Junior #Kagujje #uganda">
 
-  <!-- Stylesheets -->
-  <link href="styles/general.css" rel="stylesheet">
-  <link href="styles/header.css" rel="stylesheet">
-  <link href="styles/video.css" rel="stylesheet">
-  <link href="styles/sidebar.css" rel="stylesheet">
-</head>
-<body style="background:#000; color:#fff; font-family:Arial, sans-serif;">
-
-  <!-- ✅ Main Post Content -->
-  <main>
-    <!-- Page Title (for previews) -->
-    <h1 style="text-align:center; color:#fff; margin:20px 0;">
-      SQUID GAME | VJ JUNIOR | Season 3 Episode 3
-    </h1>
-
-  
+ 
+ <h2 style="text-align: center;"><span style="font-size: x-large;">SQUID GAME | VJ JUNIOR | Season 3 Episode 3</span></h2>
 
     <!-- 🎬 Video Player -->
     <div class="video-wrapper" style="position:relative; width:100%; height:500px; margin:20px 0;">
@@ -33,67 +19,22 @@
       </iframe>
     </div>
   </main>
-<style>  
-  body {
-    zoom: 0.9;
-  }
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-  /* Bottom sticky footer */
-  #sticky-footer {
-    position: fixed;
-    bottom: 0;
-    left: 50%;                    /* center horizontally */
-    transform: translateX(-50%);
-    width: 100%;
-    background: #fff;
-    border-top: 2px solid #ccc;
-    z-index: 9999;
-    padding: 5px 0;
-  }
-
-  /* Ad container centered */
-  #sticky-footer .ad-box {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
-
-  /* Menu links wrapper - scrollable if overflow */
-  #sticky-footer .menu {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    justify-content: center;
-    gap: 6px;
-    padding: 0 5px;
-  }
-
-  /* Individual menu links */
-  #sticky-footer a {
-    flex: 0 0 auto;
-    font-family: Georgia, Utopia, &quot;Palatino Linotype&quot;, Palatino, serif;
-    font-weight: 700;
-    padding: 10px 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 14px;
-  }
-
-  /* Hide scrollbar but keep scrollable */
-  #sticky-footer .menu::-webkit-scrollbar {
-    display: none;
-  }
-  #sticky-footer .menu {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
-
-<!-- Bottom Sticky Footer -->
-<div id='sticky-footer'>
-  
-  </div><style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743"
+     crossorigin="anonymous"></script>
+<!-- Square Top m2a -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2269884583846743"
+     data-ad-slot="7284297604"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+<style>
   .search-box {
     display: flex;
     justify-content: center;
@@ -135,6 +76,7 @@
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
   }
+
   .result-card {
     background: #fff;
     border-radius: 12px;
@@ -145,11 +87,39 @@
     transition: transform 0.2s;
   }
   .result-card:hover { transform: translateY(-4px); }
-  .result-card img {
+
+  .result-image-wrapper {
+    position: relative;
+    cursor: pointer;
+  }
+  .result-image-wrapper img {
     width: 100%;
     height: 160px;
     object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #ddd;
   }
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .play-button::after {
+    content: "";
+    border-style: solid;
+    border-width: 12px 0 12px 20px;
+    border-color: transparent transparent transparent #ff0000;
+    margin-left: 4px;
+  }
+
   .result-card-content {
     padding: 12px;
   }
@@ -168,15 +138,15 @@
 </style>
 
 <form class="search-box" onsubmit="searchPosts(event)">
-  <input id="search-input" placeholder="Search paypalads.com..." type="text"/>
+  <input id="search-input" type="text"/>
   <button type="submit">Search</button>
 </form>
 
 <div id="results"></div>
 
 <script>
-async function searchPosts(e) {
-  e.preventDefault();
+async function searchPosts(e, auto = false) {
+  if (e) e.preventDefault();
   const query = document.getElementById("search-input").value;
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "<p>Loading...</p>";
@@ -191,14 +161,20 @@ async function searchPosts(e) {
     }
 
     resultsDiv.innerHTML = posts.map(post => {
-      let img = "";
+      let imgHtml = "";
       if (post._embedded && post._embedded['wp:featuredmedia']) {
-        img = `<img src="${post._embedded['wp:featuredmedia'][0].source_url}" alt="${post.title.rendered}">`;
+        const imgUrl = post._embedded['wp:featuredmedia'][0].source_url;
+        imgHtml = `
+          <div class="result-image-wrapper" onclick="window.open('${post.link}', '_blank')">
+            <img src="${imgUrl}" alt="${post.title.rendered}">
+            <div class="play-button"></div>
+          </div>
+        `;
       }
 
       return `
         <div class="result-card">
-          ${img}
+          ${imgHtml}
           <div class="result-card-content">
             <a href="${post.link}" target="_blank">${post.title.rendered}</a>
             <p>${post.excerpt.rendered.replace(/<[^>]+>/g, "").substring(0, 120)}...</p>
@@ -210,195 +186,70 @@ async function searchPosts(e) {
     resultsDiv.innerHTML = "<p>Error fetching results.</p>";
   }
 }
+
+// Auto search on page load
+window.addEventListener("DOMContentLoaded", () => {
+  const defaultKeyword = " "; // change this word as needed
+  document.getElementById("search-input").value = defaultKeyword;
+  searchPosts(null, true);
+});
 </script>
-
- <style>  
-  body {
-    zoom: 0.9;
-  }
-
-  /* Bottom sticky footer */
-  #sticky-footer {
-    position: fixed;
-    bottom: 0;
-    left: 50%;                    /* center horizontally */
-    transform: translateX(-50%);
-    width: 90;
-    background: #fff;
-    border-top: 2px solid #ccc;
-    z-index: 9999;
-    padding: 5px 0;
-  }
-
-  /* Ad container centered */
-  #sticky-footer .ad-box {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
-
-  /* Menu links wrapper - scrollable if overflow */
-  #sticky-footer .menu {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    justify-content: center;
-    gap: 6px;
-    padding: 0 5px;
-  }
-
-  /* Individual menu links */
-  #sticky-footer a {
-    flex: 0 0 auto;
-    font-family: Georgia, Utopia, &quot;Palatino Linotype&quot;, Palatino, serif;
-    font-weight: 700;
-    padding: 10px 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 14px;
-  }
-
-  /* Hide scrollbar but keep scrollable */
-  #sticky-footer .menu::-webkit-scrollbar {
-    display: none;
-  }
-  #sticky-footer .menu {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-</style>
-
-<!-- Bottom Sticky Footer -->
-<div id='sticky-footer'>
-  <div class='ad-box'>
-    
-    <script async='async' crossorigin='anonymous' src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2269884583846743'/>
-    <ins class='adsbygoogle' data-ad-client='ca-pub-2269884583846743' data-ad-slot='6412492966' style='display:inline-block;width:270px;height:90px'/>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-  </div>
-
-  <div class='menu'>
-    <a href='' style='background-color:#04ff00;color:#ff00fe;'></a>
-    <a href='' style='background-color:#3d85c6;color:#ffa400;'></a>
-    <a href='' style='background-color:#fcff01;color:#351c75;'></a>
-    <a href='' style='background-color:#01ffff;color:#cc0000;'></a>
-    <a href='' style='background-color:#ff00fe;color:#04ff00;'></a>
-  </div>
   
- 
-  </span></b></div>
-  
-</div>
-<!-- Anchor Ad Placement -->
-<div id="anchor-ad-left">
-  <div id="anchor-toggle-left">▲ Ad</div>
-  <div id="anchor-content-left">
-    <script async="async" src="" crossorigin="anonymous"></script>
-    <!-- 160x600 Anchor Ad -->
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:160px;height:600px"
-         data-ad-client="ca-pub-2269884583846743"
-         data-ad-slot="5742141919"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
-</div>
 
-<div id="anchor-ad-right">
-  <div id="anchor-toggle-right">▲ Ad</div>
-  <div id="anchor-content-right">
-    <script async="async" src="" crossorigin="anonymous"></script>
-    <!-- 160x600 Anchor Ad -->
-    <ins class="adsbygoogle"
-         style="display:inline-block;width:160px;height:600px"
-         data-ad-client="ca-pub-2269884583846743"
-         data-ad-slot="5742141919"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-  </div>
+<div style="background-color: white; color: black; font-family: Georgia, serif; padding: 10px; text-align: center;">
+  <p>
+    <a href="https://www.paypalads.com/p/contact-us_14.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Contact Us</a>&nbsp;<a href="https://www.firimumu.paypalads.com/" style="border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration-line: none;">Movies</a>&nbsp;<a href="https://www.paypalads.com/p/privacy-policy.html" style="border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration-line: none;">Privacy Policy</a></p>
+  <p>
+    <a href="https://www.paypalads.com/p/terms-and-conditions.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Terms &amp; Conditions</a>
+  </p>
+  <p>
+    <a href="https://www.paypalads.com/p/affiliate-marketing-and-adsense.html" style="background-color: white; border: 1px solid rgb(0, 0, 0); color: black; padding: 5px 10px; text-decoration: none;">Disclosure</a>
+  </p>
 </div>
 
 <style>
-  /* Hide ads on mobile and tablet */
-  @media (max-width: 1024px) {
-    #anchor-ad-left, #anchor-ad-right {
-      display: none !important;
-    }
+  .search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    max-width: 500px;
+    width: 90%;
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    padding: 6px 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   }
 
-  /* Show ads only on desktop */
-  @media (min-width: 1025px) {
-    #anchor-ad-left, #anchor-ad-right {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 9999;
-      text-align: center;
-      background: #fff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      border: 1px solid #ddd;
-      font-family: sans-serif;
-    }
+  .search-box input[type=&quot;text&quot;] {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 30px;
+  }
 
-    #anchor-ad-left {
-      left: 0;
-    }
+  .search-box button {
+    background: gold;
+    border: none;
+    outline: none;
+    padding: 10px 18px;
+    margin-left: 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    transition: 0.3s;
+  }
 
-    #anchor-ad-right {
-      right: 0;
-    }
-
-    #anchor-toggle-left, #anchor-toggle-right {
-      background: #f1f1f1;
-      font-size: 13px;
-      color: #333;
-      cursor: pointer;
-      padding: 4px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    #anchor-content-left, #anchor-content-right {
-      transition: all 0.3s ease;
-    }
+  .search-box button:hover {
+    background: #e6b800;
   }
 </style>
 
-<script>
-  const toggleBtnLeft = document.getElementById("anchor-toggle-left");
-  const contentLeft = document.getElementById("anchor-content-left");
-  const toggleBtnRight = document.getElementById("anchor-toggle-right");
-  const contentRight = document.getElementById("anchor-content-right");
-
-  let hiddenLeft = false;
-  let hiddenRight = false;
-
-  toggleBtnLeft.addEventListener("click", function() {
-    if (!hiddenLeft) {
-      contentLeft.style.display = "none";
-      toggleBtnLeft.innerHTML = "▼ Ad";
-      hiddenLeft = true;
-    } else {
-      contentLeft.style.display = "block";
-      toggleBtnLeft.innerHTML = "▲ Ad";
-      hiddenLeft = false;
-    }
-  });
-
-  toggleBtnRight.addEventListener("click", function() {
-    if (!hiddenRight) {
-      contentRight.style.display = "none";
-      toggleBtnRight.innerHTML = "▼ Ad";
-      hiddenRight = true;
-    } else {
-      contentRight.style.display = "block";
-      toggleBtnRight.innerHTML = "▲ Ad";
-      hiddenRight = false;
-    }
-  });
-</script>
+<p style="background-color: white; border-top: 1px solid rgb(0, 0, 0); color: black; font-family: Georgia, serif; padding: 8px; text-align: center;">Copyright © 2025 Paypalads.com All Rights Reserved</p><p style="background-color: white; border-top: 1px solid rgb(0, 0, 0); color: black; font-family: Georgia, serif; padding: 8px; text-align: center;"><br /></p>
+ 
 </body>
 </html>
